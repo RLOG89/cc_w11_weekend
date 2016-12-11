@@ -23,17 +23,49 @@ var makeRequest = function(url, callback) {
 
   var populateList = function(restaurants){
 
-    var ul = document.getElementById('list');
-    const getRestaurants = restaurants.restaurants
 
+    const getRestaurants = restaurants.restaurants
+    const table = document.getElementById('rContainer')
     console.log(getRestaurants[0].restaurant)
 
     getRestaurants.forEach(function(restaurant){
-      var div = document.createElement('div');
-      div.innerText = restaurant.restaurant.name;
-      ul.appendChild(div);
+      let r = restaurant.restaurant;
+      const tr1 = createE('tr');
+      const td1 = createE('td', "Restaurnt name: " + r.name);
+      const tr2 = createE('tr');
+      const td2 = createE('td', "Cuisine: " + r.cuisines);
+      const tr3 = createE('tr');
+      const td3 = createE('td', "Average cost for two: £" + r.average_cost_for_two);
+      const tr4 = createE('tr');
+      const td4 = createE('a', "Menu:");
+      const tr5 = createE('tr')
+      const img = createE('img');
+      td4.href = r.menu_url;
+      img.src = r.featured_image;
+
+      
+      table.appendChild(tr1)
+      table.appendChild(td1)
+      table.appendChild(tr2)
+      table.appendChild(td2)
+      table.appendChild(tr3)
+      table.appendChild(td3)
+      table.appendChild(tr4)
+      table.appendChild(td4)
+      table.appendChild(tr5)
+      table.appendChild(img)
+
     });
   };
+
+
+    function createE( tag, innerText ) {
+      let e = document.createElement( tag );
+      if (innerText) {
+        e.innerText = innerText;
+      } 
+      return e;
+  }
 
   var handleButtonClick = function() {
 
