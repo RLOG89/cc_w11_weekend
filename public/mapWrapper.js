@@ -1,11 +1,18 @@
-var MapWrapper = function(container, coords, zoom){
+var MapWrapper = function(container, coords, zoom, type){
   this.googleMap = new google.maps.Map(container, {
     center: coords,
-    zoom: zoom
+    zoom: zoom,
+    mapTypeId: type
   });
 }
 
 MapWrapper.prototype = {
+  // addSearchBox: function() {
+  //   var input = document.getElementById('pac-input');
+  //   var searchBox = new google.maps.places.SearchBox(input);
+  //   this.googleMap.setCenter(input);
+  // },
+
   addMarker: function(coords) {
     var marker = new google.maps.Marker({
       position: coords,

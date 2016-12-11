@@ -4,17 +4,18 @@
   <title>Restaurants</title>
   <link rel="stylesheet" type="text/css" href="main.css">
   <script src='key.js'></script>
-  <script src='app.js'></script>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrbgt8A1fSLWEsi54SBP8A21j1YCMwqkQ&libraries=places"></script> -->
   <script src="mapWrapper.js"></script>
+  <script src='app.js'></script>
 </head>
 <body>
   <main>
-  <div id='main-map'></div>
+    <div id="map"></div>
     <aside id="search">
       <div>
         <h2>Restaurant Search</h2>
         <p>Enter a city you'd like to search for restaurants</p>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
         <input id="search-query" name="search-query" />
       </div>
       <div id="search-button" name="search-button" />
@@ -22,7 +23,9 @@
       <p id="button-result"></p>
     </div>
   </aside>
-  <div id="results"></div>
+  <div id='main-map'></div>
+  <div id='list'></div>
+
 </main>
 </body>
 </html>
