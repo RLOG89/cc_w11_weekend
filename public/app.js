@@ -6,37 +6,38 @@ var app = function() {
 }
 
 var makeRequest = function(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open("GET", url);
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("user-key", key1);
-    request.onload = callback; // need to change this later to onclick//
-    request.send();
-  }
+  var request = new XMLHttpRequest();
+  request.open("GET", url);
+  request.setRequestHeader("Accept", "application/json");
+  request.setRequestHeader("user-key", key1);
+  request.onload = callback; // need to change this later to onclick//
+  request.send();
+  };
 
   var requestComplete = function() {
     if(this.status !== 200) return;
     var jsonString = this.responseText;
     var restaurants = JSON.parse(jsonString);
     populateList(restaurants)
-    // console.log(restaurants[0].location.address)
-}
+  };
 
-var populateList = function(restaurants){
-  console.log(restaurants)
-  console.log(restaurants[0])
-  var ul = document.getElementById('list');
+  var populateList = function(restaurants){
 
-  restaurants.forEach(function(restaurant){
-    var li = document.createElement('li');
-    li.innerText = restaurant.name;
-    ul.appendChild(li);
-  });
-}
+    var ul = document.getElementById('list');
+    const getRestaurants = restaurants.restaurants
 
-var handleButtonClick = function() {
+    console.log(getRestaurants[0].restaurant)
 
-}
+    getRestaurants.forEach(function(restaurant){
+      var div = document.createElement('div');
+      div.innerText = restaurant.restaurant.name;
+      ul.appendChild(div);
+    });
+  };
+
+  var handleButtonClick = function() {
+
+  }
 
 // use this later to get more results than the initial 20
   // var increment = function() {
@@ -53,7 +54,7 @@ var handleButtonClick = function() {
   //   var url = 'https://developers.zomato.com/api/v2.1/search?'
   // }
 
-window.onload = app;
+  window.onload = app;
 
 
 // var mainMap = {};
@@ -65,7 +66,7 @@ window.onload = app;
 //   //   var searchBox = new google.maps.places.SearchBox(input);
 //   //   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
- 
+
 //   // mainMap.addSearchBox();
 //   mainMap.addMarker(center);
 //   mainMap.addClickEvent();
