@@ -7,6 +7,13 @@ makeRequest = function(url, callback) {
   request.send();
 }
 
+requestComplete = function() {
+  if(this.status !== 200) return;
+  var jsonString = this.responseText;
+  var restaurants = JSON.parse(jsonString);
+  populateList(restaurants)
+};
+
 createE = function ( tag, innerText, value ) {
   let e = document.createElement( tag );
   if (innerText) {
