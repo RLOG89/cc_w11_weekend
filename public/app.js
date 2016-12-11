@@ -1,8 +1,9 @@
 var app = function() {
-  var url = 'https://developers.zomato.com/api/v2.1/search?entity_id=76&entity_type=city&sort=rating&order=desc'
+  // var url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&sort=rating&order=desc"
+  var url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&sort=rating&order=desc"
   // var button = document.querySelector('button');
   // button.onclick = handleButtonClick; 
-  populateCities(cityI)
+  populateCities(cityData)
   makeRequest(url, requestComplete);
 }
 
@@ -19,16 +20,14 @@ var requestComplete = function() {
   if(this.status !== 200) return;
   var jsonString = this.responseText;
   var restaurants = JSON.parse(jsonString);
-  populateCities(cityI)
   populateList(restaurants)
 };
 
-function populateCities(cityI) {
+function populateCities(cityData) {
   const tag = document.getElementById('city')
-  cityI.forEach(function(city) {
-    const a = createE('select', city[i][0])
-    let aC = appendChild
-    tag.aC(a)
+  cityData.forEach(function(city) {
+    const a = createE('option', city[0])
+    tag.appendChild(a)
   })
 }
 
@@ -61,7 +60,6 @@ var populateList = function(restaurants){
     });
 };
 
-
 function createE( tag, innerText ) {
   let e = document.createElement( tag );
   if (innerText) {
@@ -70,23 +68,21 @@ function createE( tag, innerText ) {
   return e;
 }
 
-var handleButtonClick = function() {
-
+var handleSelectChanged = function(event){
+  var tag = document.querySelector('#select-result');
+  tag.innerText = this.value;
+  console.log(event);
 }
 
-// use this later to get more results than the initial 20
-function increment() {
-  var counter = 0
-  for (var i = 0; i < 5; i++) {
-    counter ++
-  }
-  return console.log(counter)
-}
-
-  // var urlConstructer = function() {
-  //   // use filter to find out what user wants to search, pass into params
-  //   //   construct url with requested fillters
-  //   var url = 'https://developers.zomato.com/api/v2.1/search?'
+  // var urlConstructer = function(e, cityData) {
+  // // for selected city take lat then take lon
+  // var lat = 
+  // var lon = event.
+  //   cityData.filter(function(city) {
+  //     const a = createE('option', city[1])
+  //     const b = createE('option', city[2])
+  //     tag.appendChild(a)
+  //     tag.appendChild(b)
   // }
 
   window.onload = app;
