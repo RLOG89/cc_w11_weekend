@@ -1,15 +1,7 @@
 var app = function() {
-  // var url = "https://developers.zomato.com/api/v2.1/"
-  // url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&sort=rating&order=desc"
-  url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&entity_type=city&sort=rating&order=desc"
-  // url = ""
   var selectBox = document.querySelector('select');
   populateCities(cityData)
   selectBox.onchange = handleSelectChange;
-  // url = urlConstructer;
-  // console.log(url)
-
-  makeRequest(url, requestComplete);
 }
 
 function populateCities(cityData) {
@@ -22,6 +14,7 @@ function populateCities(cityData) {
 
 var populateList = function(restaurants){
   const table = document.getElementById('rContainer')
+  table.innerHTML = ""
   const getRestaurants = restaurants.restaurants
   const rName = createE('th', "Restaurant name");
   const cuisine = createE('th', "Cuisine");
@@ -38,29 +31,24 @@ var populateList = function(restaurants){
     const td1 = createE('td', r.name);
     const td2 = createE('td', r.cuisines);
     const td3 = createE('td', r.average_cost_for_two);
-      // const a = createE('td', r.menu_url);
-      // a.href = r.menu_url;
+      const a = createE('td', "menu");
+      a.href = r.menu_url;
       table.appendChild(tr);
       table.appendChild(td1);
       table.appendChild(td2);
       table.appendChild(td3);
-      // table.appendChild(a);
+      table.appendChild(a);
     });
 };
 
 var handleSelectChange = function(e){
- cityData[this.value][1], cityData[this.value][2];
- var lat = cityData[this.value][1]
- var lon = cityData[this.value][2]
- url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&entity_type=city&sort=rating&order=desc"
+  console.log(this.value)
+  var lat = cityData[this.value][1]
+  var lon = cityData[this.value][2]
+  console.log(lat, lon)
 
- // urlConstructer() 
-}
-
-var urlConstructer = function(e) {
-  // var lat = cityData[this.value][1]
-  // var lon = cityData[this.value][2]
-  url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&sort=rating&order=desc"
+  url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&entity_type=city&sort=rating&order=desc"
+  makeRequest(url); 
 }
 
 function populateChart(restaurants) {
@@ -89,29 +77,3 @@ function populateChart(restaurants) {
 }
 
 window.onload = app;
-
-
-// var mainMap = {};
-
-// var initialize = function(){
-//   var mapDiv = document.getElementById('main-map');
-//   var center = {lat: 55.946723, lng: -3.202866};
-//   //   var input = document.getElementById('pac-input');
-//   //   var searchBox = new google.maps.places.SearchBox(input);
-//   //   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-
-//   // mainMap.addSearchBox();
-//   mainMap.addMarker(center);
-//   mainMap.addClickEvent();
-//   var button = document.getElementById('place-search');
-//   button.onclick = handleButtonClick;
-// }
-
-// var handleButtonClick = function() {
-//   var input = document.getElementById('pac-input');
-//   var searchBox = new google.maps.places.SearchBox(input);
-//   mainMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-// }
-
-// window.onload = initialize;
