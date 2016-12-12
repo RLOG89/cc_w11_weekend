@@ -1,40 +1,28 @@
 var app = function() {
-  // var url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&sort=rating&order=desc"
-  var url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&sort=rating&order=desc"
-  // var button = document.querySelector('button');
-  // button.onclick = handleButtonClick; 
+  // var url = "https://developers.zomato.com/api/v2.1/"
+  // url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&sort=rating&order=desc"
+  url = "https://developers.zomato.com/api/v2.1/search?entity_id=76&entity_type=city&sort=rating&order=desc"
+  // url = ""
+  var selectBox = document.querySelector('select');
   populateCities(cityData)
+  selectBox.onchange = handleSelectChange;
+  // url = urlConstructer;
+  // console.log(url)
+
   makeRequest(url, requestComplete);
 }
 
-var makeRequest = function(url, callback) {
-  var request = new XMLHttpRequest();
-  request.open("GET", url);
-  request.setRequestHeader("Accept", "application/json");
-  request.setRequestHeader("user-key", key1);
-  request.onload = callback; // need to change this later to onclick//
-  request.send();
-};
-
-var requestComplete = function() {
-  if(this.status !== 200) return;
-  var jsonString = this.responseText;
-  var restaurants = JSON.parse(jsonString);
-  populateList(restaurants)
-};
-
 function populateCities(cityData) {
   const tag = document.getElementById('city')
-  cityData.forEach(function(city) {
-    const a = createE('option', city[0])
+  cityData.forEach(function(city, index) {
+    const a = createE('option', city[0], index)
     tag.appendChild(a)
   })
 }
 
 var populateList = function(restaurants){
-  const getRestaurants = restaurants.restaurants
   const table = document.getElementById('rContainer')
-  console.log(getRestaurants[0].restaurant)
+  const getRestaurants = restaurants.restaurants
   const rName = createE('th', "Restaurant name");
   const cuisine = createE('th', "Cuisine");
   const aCost = createE('th', "Average cost for two £");
@@ -60,32 +48,47 @@ var populateList = function(restaurants){
     });
 };
 
-function createE( tag, innerText ) {
-  let e = document.createElement( tag );
-  if (innerText) {
-    e.innerText = innerText;
-  } 
-  return e;
+var handleSelectChange = function(e){
+ cityData[this.value][1], cityData[this.value][2];
+ var lat = cityData[this.value][1]
+ var lon = cityData[this.value][2]
+ url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&entity_type=city&sort=rating&order=desc"
+
+ // urlConstructer() 
 }
 
-var handleSelectChanged = function(event){
-  var tag = document.querySelector('#select-result');
-  tag.innerText = this.value;
-  console.log(event);
+var urlConstructer = function(e) {
+  // var lat = cityData[this.value][1]
+  // var lon = cityData[this.value][2]
+  url = "https://developers.zomato.com/api/v2.1/search?lat=" + lat + "&lon=" + lon + "&sort=rating&order=desc"
 }
 
-  // var urlConstructer = function(e, cityData) {
-  // // for selected city take lat then take lon
-  // var lat = 
-  // var lon = event.
-  //   cityData.filter(function(city) {
-  //     const a = createE('option', city[1])
-  //     const b = createE('option', city[2])
-  //     tag.appendChild(a)
-  //     tag.appendChild(b)
-  // }
+function populateChart(restaurants) {
+  var name = []
+  var price = []
 
-  window.onload = app;
+  const getRestaurants = restaurants.restaurants
+  getRestaurants.forEach( function (restaurant) {
+    let r = restaurant.restaurant;
+    if (r.average_cost_for_two < 50) {
+      name.push(r.name);
+      price.push(r.average_cost_for_two);
+    } else {
+      return;
+    }
+
+    var columnChartData = {
+      title: "Places to eat for two under £50",
+      seriesName: "Restaurant",
+      seriesData: price,
+      xAxisCategories: name  
+    }
+
+    new ColumnChart(columnChartData);
+  })
+}
+
+window.onload = app;
 
 
 // var mainMap = {};
