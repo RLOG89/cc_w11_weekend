@@ -12,6 +12,7 @@ requestComplete = function() {
   var jsonString = this.responseText;
   var restaurants = JSON.parse(jsonString);
   populateList(restaurants)
+  populateChart(restaurants)
 };
 
 createE = function ( tag, innerText, value ) {
